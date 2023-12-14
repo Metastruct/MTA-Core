@@ -1056,7 +1056,9 @@ if CLIENT then
 	end
 
 	function MTA.IsWanted()
-		return LocalPlayer():GetNWInt("MTAFactor") >= 1
+		local lp=LocalPlayer()
+		if not lp:IsValid() then return end
+		return lp:GetNWInt("MTAFactor") >= 1
 	end
 
 	surface.CreateFont("MTAIndicatorFont", {
