@@ -193,7 +193,7 @@ if SERVER then
 
 	net.Receive(NET_MTA_ACCEPT_BOUNTY, function(_, ply)
 		local target = net.ReadEntity()
-		if not IsValid(target) then return end
+		if not IsValid(target) or not bounties[target] then return end
 
 		if blocked_hunters[ply:SteamID()] then
 			MTA.ChatPrint(ply, "Bounty quota ", MTA.OldValueColor, "exceeded", MTA.TextColor, " try again in ", MTA.NewValueColor, "2 hours")
