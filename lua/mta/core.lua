@@ -1043,6 +1043,7 @@ if CLIENT then
 
 	local MTA_OPT_OUT = CreateClientConVar("mta_opt_out", "0", true, true, "Disable criminal events in the lobby for yourself")
 	local MTA_SHOW_WANTEDS = CreateClientConVar("mta_show_wanteds", "1", true, false, "Displays other wanted players")
+	local AUTOJUMP_SPEED_MULTIPLIER = CreateClientConVar("autojump_speed_multiplier", "1.5", true, true, "Multiplies speed by this value every time you jump")
 	cvars.AddChangeCallback("mta_opt_out", function(_, _, new)
 		if tobool(new) and LocalPlayer():GetNWInt("MTAFactor", 0) > 0 then -- cba to network a reset fuck this
 			RunConsoleCommand("kill")
