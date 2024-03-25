@@ -21,12 +21,6 @@ local ply_ents_to_remove = {
     end,
 }
 
-gameevent.Listen( "player_connect" )
-hook.Add("player_connect", "PlayerEntityLoaded", function( data )
-	local ply = Entity(data.index + 1) -- For some reason, this hook subtracts one from the entity index, with no explanation as to why.
-	ply:SetSuperJumpMultiplier(ply:GetInfoNum("autojump_speed_multiplier", 1.5)) -- Sets the speed multiplier to the desired setting instead of requiring a suicide to actually set.
-end)
-
 local function constrain(ply, constraint_reason)
     players[ply] = constraint_reason or "unknown"
 
