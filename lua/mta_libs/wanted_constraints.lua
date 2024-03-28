@@ -61,7 +61,7 @@ local function constrain(ply, constraint_reason)
     end
 
     if ply.SetSuperJumpMultiplier then
-        ply:SetSuperJumpMultiplier(10)
+        ply:SetSuperJumpMultiplier(1)
     end
 
     if ply.SetFlying then
@@ -93,7 +93,7 @@ local function release(ply)
     players[ply] = nil
 
     if ply.SetSuperJumpMultiplier then
-        ply:SetSuperJumpMultiplier(ply:GetInfoNum("autojump_speed_multiplier", 15))
+        ply:SetSuperJumpMultiplier(ply:GetInfoNum("autojump_speed_multiplier", 1.5))
     end
 
     hook.Run("MTAPlayerConstraintUpdate", ply, false)
