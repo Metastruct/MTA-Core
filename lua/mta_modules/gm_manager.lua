@@ -3,7 +3,8 @@ if SERVER then return end
 
 local tag = "mta_wait"
 local waiting_server = false
-local waiting_error = ""
+local waiting_error
+
 local function on_join()
 	if not gm_request then return end
 
@@ -15,21 +16,11 @@ local function on_join()
 	end
 
 	waiting_server = true
-	gm_request:RequestGamemodeChange("MTA", MTA_CONFIG.core.GMServerID, function(success)
-		-- give 5 seconds before dropping the notification
-		timer.Simple(5, function()
-			waiting_server = false
-			waiting_error = ""
-		end)
+	waiting_error = "Server is not running MTA right now :("
 
-		if not success then
-			waiting_error = "Could not switch to MTA :("
-			return
-		end
-
+	timer.Simple(5, function()
 		waiting_server = false
-		--RunConsoleCommand("say","/advert JOIN THE MTA GAME WITH ME. Type !goto #3")
-		RunConsoleCommand("aowl", "goto", serverid)
+		waiting_error = nil
 	end)
 
 	local dot_count = 0
@@ -49,7 +40,7 @@ local function on_join()
 		surface.DrawOutlinedRect(x, y, w, h, 2)
 
 		local text
-		if #waiting_error == 0 then
+		if not waiting_error or #waiting_error == 0 then
 			if next_dot < CurTime() then
 				dot_count = dot_count + 1
 				next_dot = CurTime() + 1
