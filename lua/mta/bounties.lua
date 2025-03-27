@@ -28,6 +28,8 @@ if SERVER then
 	local blocked_hunters = {}
 
 	local function set_nw_data(hunter)
+		if not IsValid(hunter) then return end
+		
 		local nw_data = ""
 		for _, bounty in ipairs(hunters[hunter]) do
 			nw_data = nw_data .. ("%d;"):format(bounty:EntIndex())
@@ -36,6 +38,8 @@ if SERVER then
 	end
 
 	local function finish_bounty(hunter)
+		if not IsValid(hunter) then return end
+		
 		local steam_id = hunter:SteamID()
 		blocked_hunters[steam_id] = (blocked_hunters[steam_id] or 0) + 1
 		if blocked_hunters[steam_id] >= MAX_BOUNTIES_PER_HUNTER then
@@ -46,6 +50,8 @@ if SERVER then
 	end
 
 	local function clear_bounty(ply)
+		if not IsValid(ply) then return end
+		
 		bounties[ply] = nil
 		for hunter, targets in pairs(hunters) do
 			table.RemoveByValue(targets, ply)
@@ -133,7 +139,7 @@ if SERVER then
 			local point_amount = math.ceil(ply:GetNWInt("MTAFactor") * 0.8) * (1 + MTA.GetPlayerStat(ply, "prestige_level"))
 			--local total_points = MTA.GivePoints(atck, point_amount)
 
-			if atck.GiveCoins then
+			if atck.GiveCoins and point_amount * 300 > 1 then
 				atck:GiveCoins(point_amount * 300)
 			end
 
