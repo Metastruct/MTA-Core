@@ -451,7 +451,7 @@ if CLIENT then
 		MTA.WantedText = prev_text
 	end)
 
-	local song = "https://gitlab.com/metastruct/mta_projects/mta/-/raw/master/external/songs/caves/TRACK_1.ogg"
+	local song = "https://raw.githubusercontent.com/Metastruct/MTA-Core/refs/heads/master/external/songs/caves/TRACK_1.ogg"
 	hook.Add("MTAGetDefaultSong", TAG, function()
 		local ply = LocalPlayer()
 
