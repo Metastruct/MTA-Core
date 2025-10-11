@@ -88,6 +88,12 @@ if SERVER then
 			SafeRemoveEntityDelayed(wep, 0)
 		end
 	end)
+
+	hook.Add("WeaponEquip", tag, function(wep, ply)
+		if not ply.MTAInFever and wep:GetClass() == FEVER_WEAPON_CLASS then
+			SafeRemoveEntityDelayed(wep, 0)
+		end
+	end)
 end
 
 if CLIENT then
