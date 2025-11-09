@@ -35,7 +35,7 @@ if CLIENT then
 				if not IsValid(spawn_pos_ent) or not IsValid(beam_point_origin_1) or not IsValid(beam_point_origin_2) then return end
 				beam_point_origin_1:SetPos(pos + Vector(0, 0,1000) + turn)
 				beam_point_origin_2:SetPos(pos + Vector(0, 0,1000 * (CANNON_AMT - i) / CANNON_AMT) + turn)
-				spawn_pos_ent:CreateParticleEffect("Weapon_Combine_Ion_Cannon", {
+				spawn_pos_ent:CreateParticleEffect("Weapon_Combine_Ion_Cannon", 0, {
 					{ entity = beam_point_origin_1, attachtype = PATTACH_ABSORIGIN_FOLLOW },
 					{ entity = beam_point_origin_2, attachtype = PATTACH_ABSORIGIN_FOLLOW },
 				})
