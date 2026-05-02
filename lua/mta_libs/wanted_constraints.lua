@@ -93,7 +93,7 @@ local function release(ply)
     players[ply] = nil
 
     if ply.SetSuperJumpMultiplier then
-        ply:SetSuperJumpMultiplier(ply:GetInfoNum("autojump_speed_multiplier", 1.5))
+        ply:SetSuperJumpMultiplier(1.5)
     end
 
     hook.Run("MTAPlayerConstraintUpdate", ply, false)
