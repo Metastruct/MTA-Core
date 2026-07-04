@@ -365,7 +365,7 @@ if SERVER then
 	hook.Add("MTAShouldConsiderEntity", TAG, function(ent, ply)
 		if not is_in_caves(ply) then return end
 
-		if npc_classes[ent:GetClass()] and ent.MTAOverrideSquad ~= nil then 
+		if npc_classes[ent:GetClass()] and ent.MTAOverrideSquad == "hive" then 
 			return true
 		end
 		
