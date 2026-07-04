@@ -364,8 +364,8 @@ if SERVER then
 
 	hook.Add("MTAShouldConsiderEntity", TAG, function(ent, ply)
 		if not is_in_caves(ply) then return end
-
-		return npc_classes[ent:GetClass()] ~= nil
+		if not npc_classes[ent:GetClass()] then return end
+		return ent.MTAOverrideSquad ~= nil
 	end)
 
 	hook.Add("MTARemoveNPC", TAG, function(ent)
