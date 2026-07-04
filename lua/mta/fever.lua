@@ -35,13 +35,15 @@ if SERVER then
 
 			local oldest_kill = data[1]
 			if oldest_kill > (CurTime() - FEVER_INTERVAL) then
-				local wep = atck:Give(FEVER_WEAPON_CLASS)
-				wep.unrestricted_gun = true
-				wep.lobbyok = true
-				wep.PhysgunDisabled = true
-				wep.dont_televate = true
-				atck:SelectWeapon(FEVER_WEAPON_CLASS)
-				atck:SetActiveWeapon(wep)
+				timer.Simple(0, function()
+					local wep = atck:Give(FEVER_WEAPON_CLASS)
+					wep.unrestricted_gun = true
+					wep.lobbyok = true
+					wep.PhysgunDisabled = true
+					wep.dont_televate = true
+					atck:SelectWeapon(FEVER_WEAPON_CLASS)
+					atck:SetActiveWeapon(wep)
+				end)
 
 				net.Start(tag)
 				net.WriteBool(true)
