@@ -36,7 +36,7 @@ function SWEP:Obliterate(ent)
 	dmg:SetDamage(2e9)
 	dmg:SetDamageForce(VectorRand() * 100)
 	dmg:SetDamageType(DMG_DISSOLVE)
-	dmg:SetAttacker(self:GetOwner())
+	dmg:SetAttacker(isValid(self:GetOwner()) and self:GetOwner() or self)
 	dmg:SetInflictor(self)
 
 	ent:TakeDamageInfo(dmg)
