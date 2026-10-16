@@ -164,32 +164,37 @@ if SERVER then
 		check_immunity()
 	end)
 
-	hook.Add("EntityTakeDamage", tag, function(ent, dmg_info)
-		local atck = dmg_info:GetAttacker()
-		if hunters[atck] and ent:GetNWBool("MTANPC") then return true end
-	end)
-
-	hook.Add("PlayerShouldTakeDamage", tag, function(ply, atck)
+	local function should_damage(ply, atck)
 		if not atck:IsPlayer() then return end
+		if ply == atck then return end
 
 		-- allow the bounties to fight back
 		if not IS_MTA_GM and bounties[atck] and hunters[ply] then return true end
 
 		-- dont damage this player if there is a bounty for them
-		if not hunters[atck] and bounties[ply] and ply ~= atck and not MTA.IsWanted(atck) then
-			MTA.ChatPrint(atck, "You must accept the bounty for this player to kill them")
-			return false
-		end
+		if not hunters[atck] and bounties[ply] and not MTA.IsWanted(atck) then return false end
 
 		local targets = hunters[atck]
 		if not targets then return end
 
-		if not table.HasValue(targets, ply) then
-			MTA.ChatPrint(atck, "You must accept the bounty for this player to kill them")
-			return false
-		end
+		if not table.HasValue(targets, ply) then return false end
 
 		return true
+	end
+
+	hook.Add("EntityTakeDamage", tag, function(ent, dmg_info)
+		local atck = dmg_info:GetAttacker()
+		if hunters[atck] and ent:GetNWBool("MTANPC") then return true end
+
+		-- other addons run PlayerShouldTakeDamage as a plain question, so only tell the
+		-- attacker off here where the damage is really theirs
+		if ent:IsPlayer() and should_damage(ent, atck) == false then
+			MTA.ChatPrint(atck, "You must accept the bounty for this player to kill them")
+		end
+	end)
+
+	hook.Add("PlayerShouldTakeDamage", tag, function(ply, atck)
+		return should_damage(ply, atck)
 	end)
 
 	hook.Add("PlayerDisconnected", tag, function(ply)
